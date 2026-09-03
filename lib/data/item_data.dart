@@ -3,23 +3,75 @@ import '../models/item.dart';
 
 const List<Item> items = [
   Item(
-    name: 'Item 1',
+    id: 'product-1',
+    name: 'Placeholder Phone',
     description:
-        'Apples are sweet, crunchy fruits that can be eaten fresh or used in many dishes.',
-    icon: Icons.apple,
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae.',
+    price: 0,
+    icon: Icons.phone_iphone_rounded,
   ),
-
   Item(
-    name: 'Item 2',
+    id: 'product-2',
+    name: 'Placeholder Tablet',
     description:
-        'Bananas are soft, sweet fruits known for their yellow peel.',
-    icon: Icons.eco,
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae.',
+    price: 0,
+    icon: Icons.tablet_mac_rounded,
   ),
-
   Item(
-    name: 'Item 3',
+    id: 'product-3',
+    name: 'Placeholder Laptop',
     description:
-        'Oranges are juicy citrus fruits known for their sweet and slightly sour flavor.',
-    icon: Icons.circle,
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae.',
+    price: 0,
+    icon: Icons.laptop_mac_rounded,
+  ),
+  Item(
+    id: 'product-4',
+    name: 'Placeholder Headset',
+    description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae.',
+    price: 0,
+    icon: Icons.headphones_rounded,
+  ),
+  Item(
+    id: 'product-5',
+    name: 'Placeholder Watch',
+    description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae.',
+    price: 0,
+    icon: Icons.watch_rounded,
+  ),
+  Item(
+    id: 'product-6',
+    name: 'Placeholder Camera',
+    description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae.',
+    price: 0,
+    icon: Icons.photo_camera_rounded,
+  ),
+  Item(
+    id: 'product-7',
+    name: 'Placeholder Console',
+    description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae.',
+    price: 0,
+    icon: Icons.sports_esports_rounded,
+  ),
+  Item(
+    id: 'product-8',
+    name: 'Placeholder Speaker',
+    description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae.',
+    price: 0,
+    icon: Icons.speaker_rounded,
+  ),
+  Item(
+    id: 'product-9',
+    name: 'Placeholder ',
+    description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae.',
+    price: 0,
+    icon: Icons.speaker_rounded,
   ),
 ];

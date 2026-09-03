@@ -16,14 +16,10 @@ final GoRouter appRouter = GoRouter(
 
       routes: [
         GoRoute(
-          path: 'item/:name',
+          path: 'item/:id',
           builder: (context, state) {
-            final String fruitName =
-                state.pathParameters['name']!;
-
-            return ItemDetailPage(
-              fruitName: fruitName,
-            );
+            final String itemId = state.pathParameters['id']!;
+            return ItemDetailPage(itemId: itemId);
           },
         ),
       ],
@@ -32,13 +28,11 @@ final GoRouter appRouter = GoRouter(
 
   errorBuilder: (context, state) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Page Not Found'),
-      ),
-      body: const Center(
+      appBar: AppBar(title: const Text('Page Not Found')),
+      body: Center(
         child: Text(
           '404 - Page Not Found',
-          style: TextStyle(fontSize: 24),
+          style: Theme.of(context).textTheme.headlineMedium,
         ),
       ),
     );

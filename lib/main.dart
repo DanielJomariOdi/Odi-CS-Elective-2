@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'router/app_router.dart';
+import 'theme/app_theme.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,19 +11,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-
-      title: 'Final exam Ecomerce',
-
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.yellowAccent,
-        ),
-        useMaterial3: true,
-      ),
-
-      routerConfig: appRouter,
+    return ValueListenableBuilder<ThemeMode>(
+      valueListenable: appThemeMode,
+      builder: (context, themeMode, child) {
+        return MaterialApp.router(
+          debugShowCheckedModeBanner: false,
+          title: 'Odi Shop',
+          themeMode: themeMode,
+          theme: buildAppTheme(Brightness.light),
+          darkTheme: buildAppTheme(Brightness.dark),
+          routerConfig: appRouter,
+        );
+      },
     );
   }
 }
