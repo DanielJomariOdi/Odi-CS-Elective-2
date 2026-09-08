@@ -7,7 +7,7 @@ const List<Item> items = [
     name: 'Placeholder Phone',
     description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae.',
-    price: 0,
+    price: 299.99,
     icon: Icons.phone_iphone_rounded,
   ),
   Item(
@@ -15,7 +15,7 @@ const List<Item> items = [
     name: 'Placeholder Tablet',
     description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae.',
-    price: 0,
+    price: 449.99,
     icon: Icons.tablet_mac_rounded,
   ),
   Item(
@@ -23,7 +23,7 @@ const List<Item> items = [
     name: 'Placeholder Laptop',
     description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae.',
-    price: 0,
+    price: 899.99,
     icon: Icons.laptop_mac_rounded,
   ),
   Item(
@@ -31,7 +31,7 @@ const List<Item> items = [
     name: 'Placeholder Headset',
     description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae.',
-    price: 0,
+    price: 79.99,
     icon: Icons.headphones_rounded,
   ),
   Item(
@@ -39,7 +39,7 @@ const List<Item> items = [
     name: 'Placeholder Watch',
     description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae.',
-    price: 0,
+    price: 129.99,
     icon: Icons.watch_rounded,
   ),
   Item(
@@ -47,7 +47,7 @@ const List<Item> items = [
     name: 'Placeholder Camera',
     description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae.',
-    price: 0,
+    price: 549.99,
     icon: Icons.photo_camera_rounded,
   ),
   Item(
@@ -55,7 +55,7 @@ const List<Item> items = [
     name: 'Placeholder Console',
     description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae.',
-    price: 0,
+    price: 399.99,
     icon: Icons.sports_esports_rounded,
   ),
   Item(
@@ -63,7 +63,7 @@ const List<Item> items = [
     name: 'Placeholder Speaker',
     description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae.',
-    price: 0,
+    price: 59.99,
     icon: Icons.speaker_rounded,
   ),
   Item(
@@ -71,7 +71,7 @@ const List<Item> items = [
     name: 'Placeholder ',
     description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae.',
-    price: 0,
+    price: 39.99,
     icon: Icons.speaker_rounded,
   ),
 ];

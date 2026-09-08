@@ -10,7 +10,7 @@ void toggleAppThemeMode() {
 
 ThemeData buildAppTheme(Brightness brightness) {
   final colorScheme = ColorScheme.fromSeed(
-    seedColor: const Color.fromARGB(255, 228, 10, 2),
+    seedColor: const Color.fromARGB(255, 107, 212, 69),
     brightness: brightness,
   );
   final baseTheme = ThemeData(colorScheme: colorScheme, useMaterial3: true);
@@ -57,13 +57,12 @@ ThemeData buildAppTheme(Brightness brightness) {
       ),
     ),
     filledButtonTheme: FilledButtonThemeData(
-      style: ButtonStyle(
-        backgroundColor: WidgetStatePropertyAll(colorScheme.primary),
-        foregroundColor: WidgetStatePropertyAll(colorScheme.onPrimary),
-        fixedSize: const WidgetStatePropertyAll(Size.square(36)),
-        iconSize: const WidgetStatePropertyAll(22),
-        padding: const WidgetStatePropertyAll(EdgeInsets.zero),
-        shape: const WidgetStatePropertyAll(CircleBorder()),
+      style: FilledButton.styleFrom(
+        backgroundColor: colorScheme.primary,
+        foregroundColor: colorScheme.onPrimary,
+        minimumSize: const Size(48, 48),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),
     ),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
@@ -73,8 +72,10 @@ ThemeData buildAppTheme(Brightness brightness) {
       shape: const CircleBorder(),
     ),
     iconButtonTheme: IconButtonThemeData(
-      style: ButtonStyle(
-        foregroundColor: WidgetStatePropertyAll(colorScheme.onSurface),
+      style: IconButton.styleFrom(
+        minimumSize: const Size.square(48),
+        padding: const EdgeInsets.all(12),
+        shape: const CircleBorder(),
       ),
     ),
   );

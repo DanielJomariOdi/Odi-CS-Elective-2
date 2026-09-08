@@ -3,14 +3,21 @@ import 'package:go_router/go_router.dart';
 
 import '../data/item_data.dart';
 import '../models/item.dart';
+import '../state/cart_controller.dart';
 import '../theme/app_theme.dart';
+import '../utils/format_price.dart';
+import '../widgets/add_to_cart_button.dart';
+import '../widgets/cart_button.dart';
+import '../widgets/product_image.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  final CartController cart;
+
+  const HomePage({super.key, required this.cart});
 
   @override
   Widget build(BuildContext context) {
-    final isDarkMode = appThemeMode.value == ThemeMode.dark;
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
       appBar: AppBar(
@@ -25,20 +32,19 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-      body: SafeArea(child: _ProductGrid(items: items)),
-      floatingActionButton: FloatingActionButton(
-        tooltip: 'Cart',
-        onPressed: () {},
-        child: Badge(child: const Icon(Icons.shopping_cart_sharp)),
+      body: SafeArea(
+        child: _ProductGrid(items: items, cart: cart),
       ),
+      floatingActionButton: CartButton(cart: cart),
     );
   }
 }
 
 class _ProductGrid extends StatelessWidget {
   final List<Item> items;
+  final CartController cart;
 
-  const _ProductGrid({required this.items});
+  const _ProductGrid({required this.items, required this.cart});
 
   @override
   Widget build(BuildContext context) {
@@ -50,10 +56,13 @@ class _ProductGrid extends StatelessWidget {
             : width >= 600
             ? 3
             : 2;
-        final cardHeight = width >= 600 ? 300.0 : 260.0;
+        final textScale = MediaQuery.textScalerOf(context).scale(14) / 14;
+        final cardHeight =
+            (width >= 600 ? 332.0 : 312.0) +
+            (textScale > 1 ? (textScale - 1) * 110 : 0);
 
         return GridView.builder(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.fromLTRB(16, 16, 16, 96),
           itemCount: items.length,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: crossAxisCount,
@@ -62,7 +71,7 @@ class _ProductGrid extends StatelessWidget {
             mainAxisExtent: cardHeight,
           ),
           itemBuilder: (context, index) {
-            return ProductCard(item: items[index]);
+            return ProductCard(item: items[index], cart: cart);
           },
         );
       },
@@ -72,13 +81,13 @@ class _ProductGrid extends StatelessWidget {
 
 class ProductCard extends StatelessWidget {
   final Item item;
+  final CartController cart;
 
-  const ProductCard({super.key, required this.item});
+  const ProductCard({super.key, required this.item, required this.cart});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
 
     return Card(
       clipBehavior: Clip.antiAlias,
@@ -98,20 +107,7 @@ class ProductCard extends StatelessWidget {
                 style: theme.textTheme.titleSmall,
               ),
               const SizedBox(height: 10),
-              Expanded(
-                child: Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: colorScheme.secondaryContainer,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Icon(
-                    item.icon,
-                    color: colorScheme.onSecondaryContainer,
-                    size: 58,
-                  ),
-                ),
-              ),
+              Expanded(child: ProductImage(item: item)),
               const SizedBox(height: 10),
               Text(
                 item.description,
@@ -120,23 +116,16 @@ class ProductCard extends StatelessWidget {
                 style: theme.textTheme.bodySmall,
               ),
               const SizedBox(height: 10),
-              Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      '\$${item.price.toStringAsFixed(0)}',
-                      style: theme.textTheme.titleMedium,
-                    ),
-                  ),
-                  SizedBox.square(
-                    dimension: 36,
-                    child: FilledButton(
-                      onPressed: () {},
-                      child: const Icon(Icons.add_rounded),
-                    ),
-                  ),
-                ],
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  formatPrice(item.price),
+                  style: theme.textTheme.titleMedium,
+                ),
               ),
+              const SizedBox(height: 8),
+              AddToCartButton(item: item, cart: cart, compact: true),
             ],
           ),
         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'router/app_router.dart';
 import 'theme/app_theme.dart';
 
@@ -7,7 +8,9 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final GoRouter? router;
+
+  const MyApp({super.key, this.router});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +23,7 @@ class MyApp extends StatelessWidget {
           themeMode: themeMode,
           theme: buildAppTheme(Brightness.light),
           darkTheme: buildAppTheme(Brightness.dark),
-          routerConfig: appRouter,
+          routerConfig: router ?? appRouter,
         );
       },
     );
