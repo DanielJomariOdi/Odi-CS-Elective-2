@@ -1,11 +1,11 @@
 {
-    "name": "act_1",
-    "short_name": "act_1",
+    "name": "Pokédex",
+    "short_name": "Pokédex",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#F7F8FA",
+    "theme_color": "#E34C4C",
+    "description": "Meet the first 30 Pokémon in a Flutter Pokédex.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
