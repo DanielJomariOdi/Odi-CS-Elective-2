@@ -123,6 +123,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.18.0"
+  nested:
+    dependency: transitive
+    description:
+      name: nested
+      sha256: "03bac4c528c64c95c722ec99280375a6f2fc708eec17c7b3f07253b626cd2a20"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   path:
     dependency: transitive
     description:
@@ -131,6 +139,17 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.1"
+<<<<<<< Updated upstream
+=======
+  provider:
+    dependency: "direct main"
+    description:
+      name: provider
+      sha256: "4e82183fa20e5ca25703ead7e05de9e4cceed1fbd1eadc1ac3cb6f565a09f272"
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.1.5+1"
+>>>>>>> Stashed changes
   sky_engine:
     dependency: transitive
     description: flutter
@@ -184,6 +203,17 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.11"
+<<<<<<< Updated upstream
+=======
+  typed_data:
+    dependency: transitive
+    description:
+      name: typed_data
+      sha256: f9049c039ebfeb4cf7a7104a675823cd72dba8297f264b6637062516699fa006
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.4.0"
+>>>>>>> Stashed changes
   vector_math:
     dependency: transitive
     description:

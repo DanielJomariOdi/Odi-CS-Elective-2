@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
+<<<<<<< Updated upstream
 import 'package:flutter/services.dart';
+=======
+import 'package:provider/provider.dart';
+
+import 'providers/pokemon_provider.dart';
+import 'screens/pokedex_screen.dart';
+>>>>>>> Stashed changes
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,6 +42,7 @@ class StreamingApp extends StatelessWidget {
   }
 }
 
+<<<<<<< Updated upstream
 class StreamingHomePage extends StatefulWidget {
   const StreamingHomePage({super.key});
 
@@ -86,6 +94,32 @@ class _StreamingHomePageState extends State<StreamingHomePage> {
                   posterColors: posterColors,
                 ),
               ],
+=======
+    return ChangeNotifierProvider<PokemonProvider>(
+      create: (_) => PokemonProvider()..fetchPokemon(),
+      child: MaterialApp(
+        title: 'Pokédex',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          useMaterial3: true,
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: accent,
+            primary: accent,
+            surface: const Color(0xFFF7F8FA),
+          ),
+          scaffoldBackgroundColor: const Color(0xFFF7F8FA),
+          fontFamily: 'Arial',
+          textTheme: ThemeData.light().textTheme.apply(
+            bodyColor: ink,
+            displayColor: ink,
+          ),
+          filledButtonTheme: FilledButtonThemeData(
+            style: FilledButton.styleFrom(
+              padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 18),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+>>>>>>> Stashed changes
             ),
           ),
 
