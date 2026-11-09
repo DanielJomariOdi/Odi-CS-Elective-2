@@ -1,8 +1,3 @@
-<<<<<<< Updated upstream
-# act_1
-
-A new Flutter project.
-=======
 # Pokédex Provider Activity
 
 A Flutter Pokédex showing the first 30 Pokémon, from Bulbasaur (#001) through
@@ -86,4 +81,3 @@ lib/
   widgets/           Reusable Pokémon cards and state components
   screens/           Pokédex grid and individual Pokémon page
 ```
->>>>>>> Stashed changes
