@@ -1,19 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../data/item_data.dart';
 import '../models/item.dart';
+import '../services/product_service.dart';
 import '../state/cart_controller.dart';
+import '../state/product_controller.dart';
 import '../theme/app_theme.dart';
 import '../utils/format_price.dart';
 import '../widgets/add_to_cart_button.dart';
 import '../widgets/cart_button.dart';
 import '../widgets/product_image.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   final CartController cart;
+  final ProductService? productService;
 
-  const HomePage({super.key, required this.cart});
+  const HomePage({super.key, required this.cart, this.productService});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  late final ProductController _products;
+  RangeValues _sliderValues = const RangeValues(0, 1000);
+
+  @override
+  void initState() {
+    super.initState();
+    _products = ProductController(service: widget.productService);
+    _products.load();
+  }
+
+  @override
+  void dispose() {
+    _products.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,10 +56,122 @@ class HomePage extends StatelessWidget {
         ],
       ),
       body: SafeArea(
-        child: _ProductGrid(items: items, cart: cart),
+        child: AnimatedBuilder(
+          animation: _products,
+          builder: (context, child) {
+            return Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 10, 16, 4),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Wrap(
+                        alignment: WrapAlignment.spaceBetween,
+                        spacing: 10,
+                        runSpacing: 4,
+                        children: [
+                          Text(
+                            'Price filter',
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                          Text(
+                            '${formatPrice(_sliderValues.start)} – '
+                            '${formatPrice(_sliderValues.end)}',
+                            key: const Key('selected-price-range'),
+                          ),
+                        ],
+                      ),
+                      RangeSlider(
+                        key: const Key('price-range-slider'),
+                        min: ProductController.lowerBound,
+                        max: ProductController.upperBound,
+                        divisions: 100,
+                        values: _sliderValues,
+                        labels: RangeLabels(
+                          formatPrice(_sliderValues.start),
+                          formatPrice(_sliderValues.end),
+                        ),
+                        onChanged: (value) =>
+                            setState(() => _sliderValues = value),
+                        // Query once the user finishes dragging, not on every tick.
+                        onChangeEnd: _products.setPriceRange,
+                      ),
+                      Text(
+                        _products.isLoading
+                            ? 'Loading products…'
+                            : '${_products.totalCount} matching product(s)',
+                        key: const Key('product-count'),
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(child: _buildResults(context)),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
+                  child: Wrap(
+                    alignment: WrapAlignment.center,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    spacing: 12,
+                    runSpacing: 4,
+                    children: [
+                      OutlinedButton(
+                        key: const Key('previous-page'),
+                        onPressed: _products.canGoBack
+                            ? _products.previousPage
+                            : null,
+                        child: const Text('Previous'),
+                      ),
+                      Text(
+                        '${_products.currentPage} / ${_products.totalPages}',
+                        key: const Key('page-indicator'),
+                      ),
+                      OutlinedButton(
+                        key: const Key('next-page'),
+                        onPressed: _products.canGoNext
+                            ? _products.nextPage
+                            : null,
+                        child: const Text('Next'),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
       ),
-      floatingActionButton: CartButton(cart: cart),
+      floatingActionButton: CartButton(cart: widget.cart),
     );
+  }
+
+  Widget _buildResults(BuildContext context) {
+    if (_products.isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+    if (_products.error != null) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(_products.error!, textAlign: TextAlign.center),
+              const SizedBox(height: 12),
+              FilledButton(
+                onPressed: _products.load,
+                child: const Text('Retry'),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+    if (_products.items.isEmpty) {
+      return const Center(child: Text('No products match this price range.'));
+    }
+    return _ProductGrid(items: _products.items, cart: widget.cart);
   }
 }
 
@@ -70,9 +205,8 @@ class _ProductGrid extends StatelessWidget {
             mainAxisSpacing: 12,
             mainAxisExtent: cardHeight,
           ),
-          itemBuilder: (context, index) {
-            return ProductCard(item: items[index], cart: cart);
-          },
+          itemBuilder: (context, index) =>
+              ProductCard(item: items[index], cart: cart),
         );
       },
     );
@@ -92,9 +226,7 @@ class ProductCard extends StatelessWidget {
     return Card(
       clipBehavior: Clip.antiAlias,
       child: InkWell(
-        onTap: () {
-          context.go('/item/${item.id}');
-        },
+        onTap: () => context.go('/item/${item.id}'),
         child: Padding(
           padding: const EdgeInsets.all(12),
           child: Column(

@@ -11,6 +11,7 @@ import 'package:act_1/theme/app_theme.dart';
 import 'package:act_1/utils/format_price.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'support/fake_product_service.dart';
 
 void main() {
   late CartController cart;
@@ -29,7 +30,11 @@ void main() {
     tester.view.devicePixelRatio = 1;
     tester.view.physicalSize = size;
     tester.platformDispatcher.textScaleFactorTestValue = textScale;
-    final router = createAppRouter(cart, initialLocation: location);
+    final router = createAppRouter(
+      cart,
+      initialLocation: location,
+      productService: FakeProductService(),
+    );
     addTearDown(() async {
       await tester.pumpWidget(const SizedBox.shrink());
       router.dispose();
@@ -108,6 +113,8 @@ void main() {
       final decrease = find.byTooltip('Decrease Placeholder Phone quantity');
 
       expect(quantity, findsNothing);
+      await tester.ensureVisible(add);
+      await tester.pumpAndSettle();
       await tester.tap(add);
       await tester.pumpAndSettle();
       expect(add, findsNothing);
@@ -243,7 +250,11 @@ void main() {
         );
         expect(tester.takeException(), isNull);
 
-        await tester.tap(find.text('Placeholder Phone'));
+        final phoneName = find.text('Placeholder Phone');
+
+        await tester.ensureVisible(phoneName);
+        await tester.pumpAndSettle();
+        await tester.tap(phoneName);
         await tester.pumpAndSettle();
         expect(tester.takeException(), isNull);
         await tester.tap(find.byType(FloatingActionButton));
