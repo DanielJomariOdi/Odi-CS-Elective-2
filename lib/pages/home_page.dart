@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../models/item.dart';
 import '../services/product_service.dart';
 import '../state/cart_controller.dart';
+import '../state/auth_controller.dart';
 import '../state/product_controller.dart';
 import '../theme/app_theme.dart';
 import '../utils/format_price.dart';
@@ -14,8 +15,14 @@ import '../widgets/product_image.dart';
 class HomePage extends StatefulWidget {
   final CartController cart;
   final ProductService? productService;
+  final AuthController? authController;
 
-  const HomePage({super.key, required this.cart, this.productService});
+  const HomePage({
+    super.key,
+    required this.cart,
+    this.productService,
+    this.authController,
+  });
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -46,6 +53,22 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('Odi Shop'),
         actions: [
+          if (widget.authController != null)
+            AnimatedBuilder(
+              animation: widget.authController!,
+              builder: (context, _) => IconButton(
+                key: const Key('account-button'),
+                tooltip: widget.authController!.isSignedIn
+                    ? 'Your Google account'
+                    : 'Sign in with Google',
+                onPressed: () => context.go('/account'),
+                icon: Icon(
+                  widget.authController!.isSignedIn
+                      ? Icons.account_circle_rounded
+                      : Icons.login_rounded,
+                ),
+              ),
+            ),
           IconButton(
             tooltip: 'Toggle theme',
             onPressed: toggleAppThemeMode,
