@@ -50,6 +50,8 @@ class AuthController extends ChangeNotifier {
       // OAuth launches a browser; success is reported later via auth state.
       final launched = await _client.auth.signInWithOAuth(
         OAuthProvider.google,
+        // Show the account picker even when Chrome remembers an earlier login.
+        queryParams: const {'prompt': 'select_account'},
         redirectTo: kIsWeb ? null : mobileAuthRedirectUrl,
         authScreenLaunchMode: kIsWeb
             ? LaunchMode.platformDefault
@@ -77,7 +79,8 @@ class AuthController extends ChangeNotifier {
     notifyListeners();
 
     try {
-      await _client.auth.signOut();
+      // End this application's session; do not sign the user out of Google.
+      await _client.auth.signOut(scope: SignOutScope.local);
     } on AuthException catch (error) {
       _error = error.message;
     } catch (_) {
